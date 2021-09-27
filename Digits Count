@@ -1,0 +1,42 @@
+#include <iostream>         //Author : Manish kumar Singh
+#include<cmath>             //Date : 27/09/2021
+using namespace std;        //Problem : Counting Digits in the number 
+
+int countDigitsItr(int number)
+{
+    if(number<0)number=-number; // this line supports negative number digit count also
+    int count=0;
+    while(number>0)  //Mathod 1 : Counting numbers of digits in positive number
+    {               //Time Complexity : O(n), where n=number of digits in number
+        count++;    //Space Complexity : O(1)
+        number/=10; //Mode : Iterative
+    }
+    return count;
+}
+
+int countDigitsRec(int number)
+{
+    if(number<0)number=-number; // this line supports negative number digit count also
+    if(number<10)               // Time Complexity : O(n), where n=number of digits in number
+        return 1;               //Space Complexity : O(n), for calling n function stack 
+     else return 1+countDigitsRec(number/10);  // Mode : Recursive
+}
+
+int countDigitsMath(int number)
+{
+    if(number<0)number=-number; // this line supports negative number digit count also
+    return floor(log10(number)+1); //By default log have base 10 eg 123 log10 will give 2 
+}                                   // log is bydefault exponential 
+int main()                          // log2(number) will return power of 2 eg log(64)=> 6
+{
+    cout<<"Enter the number"<<endl;
+    int number;cin>>number;
+    cout<<"By Iterative Methods... ";
+    cout<<countDigitsItr(number)<<endl;
+    cout<<"By recursive Methods... ";
+    cout<<countDigitsRec(number)<<endl;
+    cout<<"By Mathematical Methods... ";
+    cout<<countDigitsMath(number)<<endl;
+    return 0;
+}
+//There are three methods for counting digits in a number
