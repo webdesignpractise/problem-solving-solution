@@ -1,0 +1,77 @@
+Method 1: Naive Method (Self Code)
+-----------------------
+public static int[] calculateSpan(int price[], int n)
+    {
+        // Your code here
+        int res[]=new int[n];
+        res[0]=1;
+        for(int i=1;i<n;i++)
+        {
+            int j=i-1;
+            boolean flag=false;
+            for(;j>=0;j--)
+            {
+                if(price[i]<price[j])
+                {
+                    res[i]=i-j;
+                    flag=true;
+                    break;
+                }
+            }
+            if(flag==false)
+                res[i]=i-j;
+        }
+        return res;
+    }
+    
+    //This will take O(n2) time complexity and O(1) Auxilary Space 
+    
+    Mathod 2:
+    ---------
+    public static int[] calculateSpan(int price[], int n)
+    {
+        // Your code here
+        int res[]=new int[n];
+        res[0]=1;
+        for(int i=1;i<n;i++)
+        {
+            int span=1;
+            for(int j=i-1;j>=0 && price[j]<=price[i];j--)
+                span++;
+            res[i]=span;
+        }
+        return res;
+    }
+    
+    //This will also take O(n2) time complexity and O(1) Auxilary Space 
+    
+    Method 3: (EFFICIENT SOLUTION)
+   --------------------------------
+   
+   public static int[] calculateSpan(int price[], int n)
+    {
+        // Your code here
+        int res[]=new int[n];
+        res[0]=1;
+        Deque<Integer> s=new ArrayDeque<Integer>();
+        s.push(0);
+        for(int i=1;i<n;i++)
+        {
+            while(s.isEmpty()==false && price[i]>=price[s.peek()])
+            {
+                s.pop();
+            }
+            
+            if(s.isEmpty())
+                res[i]=i+1;
+            else
+                res[i]=i-s.peek();
+            s.push(i);
+        }
+        return res;
+    }
+    
+    
+    //This will take Theta(n) time complexity and O(n) Auxilary Space 
+    
+    
