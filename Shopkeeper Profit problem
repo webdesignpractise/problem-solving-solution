@@ -1,3 +1,17 @@
+Ram makes a plan for the new year. He decides to sell the products and writes down the price for N days.
+The prices are denoted by an array V[] of N elements. Looking at the sequence he decides that for the ith product,
+he is going to get a profit that equals to (Vj - Vi), where j is the lowest index just greater than i and Vj >= Vi.
+If there is no such j, then his profit will be equal to Vi. Find the total profit of Ram.
+input 1: 
+5 
+5 4 6 2 1
+
+Output: 12
+
+Explanation: 
+-------------
+(6-5)+(6-4)+6+2+1=12    
+
 Method 1: (Naive Solution)
 --------------------------
 public static int profit(ArrayList<Integer> V)
