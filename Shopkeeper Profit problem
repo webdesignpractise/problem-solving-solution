@@ -1,0 +1,56 @@
+Method 1: (Naive Solution)
+--------------------------
+public static int profit(ArrayList<Integer> V)
+ {
+        //Your code here
+        
+        int profit=0;
+        for(int i=0;i<V.size();i++)
+        {
+            int j=i+1;
+            for(;j<V.size();j++)
+            {
+                if(V.get(j)>=V.get(i))
+                {
+                    profit+=(V.get(j)-V.get(i));
+                    break;
+                }
+            }
+            if(j>=V.size())
+               profit+=V.get(i); 
+        }
+        return profit;
+        
+ }
+    
+Time Complexity : O(n) 
+Space Complexity: O(1)
+
+
+Method 2: (Efficient Solution)
+-------------------------------
+public static int profit(ArrayList<Integer> V)
+    {
+        
+        int n=V.size();
+        Stack<Integer> s=new Stack<Integer>();
+        int profit=V.get(n-1);
+        s.push(V.get(n-1));
+        
+        for(int i=n-2;i>=0;i--)
+        {
+            while(!s.isEmpty() && V.get(i)>s.peek())s.pop();
+            
+            if(s.isEmpty())
+                profit+=V.get(i);
+            else
+                profit+=(s.peek()-V.get(i));
+            s.push(V.get(i));
+        }
+        return profit;
+        
+    }
+    
+    Time complexity : Theta n
+    Space Cpmplexity : O(n)
+    
