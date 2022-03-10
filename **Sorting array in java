@@ -1,0 +1,26 @@
+1. In assending order
+------------------
+
+Arrays.sort(arr);
+
+
+2. In descending order
+--------------------
+
+for(int i=0;i<arr.length;i++)
+  arr[i]=-arr[i];
+  
+Arrays.sort(arr);
+
+for(int i=0;i<arr.length;i++)
+  arr[i]=-arr[i];
+  
+  
+3. Using stream
+----------------
+
+int[] arrDesc = Arrays.stream(arr).boxed()
+    .sorted(Collections.reverseOrder())
+    .mapToInt(Integer::intValue)
+    .toArray();
+    
