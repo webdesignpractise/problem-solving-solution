@@ -201,13 +201,12 @@ int kMostFrequent(int arr[], int n, int k){
                 
                 res+=i;
                 
-               // System.out.print(x+" ");
+                System.out.print(x+" ");
                 count++;
                 if(count==k)
                      break;
                
             }
-            //System.out.println();
             if(count==k)
                 break;
         }
@@ -217,5 +216,5 @@ int kMostFrequent(int arr[], int n, int k){
         
     }
     
-    Time Complexity : O(nlogn)
+    Time Complexity : O(n)
     Space Complexity : O(n)
