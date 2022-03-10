@@ -1,0 +1,221 @@
+Medium Accuracy: 65.71% Submissions: 7352 Points: 4
+Given an array arr[] of N integers in which elements may be repeating several times. Also, a positive number K is given and the task is to find sum of total frequencies of K most occurring elements
+
+Note: The value of K is guaranteed to be less than or equal to the number of distinct elements in arr.
+
+Example 1:
+
+Input:
+N = 8
+arr[] = {3,1,4,4,5,2,6,1}
+K = 2
+Output: 4
+Explanation: Since, 4 and 1 are 2 most
+occurring elements in the array with
+their frequencies as 2, 2. So total
+frequency is 2 + 2 = 4.
+Example 2:
+
+Input:
+N = 8
+arr[] = {3,3,3,4,1,1,6,1}
+K = 2
+Output: 6
+Explanation: Since, 3 and 1 are most
+occurring elements in the array with
+frequencies 3, 3 respectively. So,
+total frequency is 6.
+
+Solution:
+---------
+=========
+
+Method 1:(using HashMap and ArrayList)
+--------------------------------------
+int kMostFrequent(int arr[], int n, int k){
+        // your code here
+        
+        Map<Integer,Integer> m=new HashMap<Integer,Integer>();
+        
+        for(int i=0;i<n;i++)
+            m.put(arr[i],m.getOrDefault(arr[i],0)+1);
+        
+        List<Map.Entry<Integer,Integer>> list=new ArrayList<Map.Entry<Integer,Integer>>(m.entrySet());
+            
+        Collections.sort(list,new Comparator<Map.Entry<Integer,Integer>>(){
+                
+                public int compare(Map.Entry<Integer,Integer>m1,Map.Entry<Integer,Integer>m2)
+                {
+                    if(m1.getValue()==m2.getValue())
+                        return m1.getKey().compareTo(m2.getKey());
+                    else
+                        return m2.getValue().compareTo(m1.getValue());
+                }
+            });
+        
+        
+        int res=0;
+        for(int i=0;i<k;i++){
+            
+            System.out.println(list.get(i).getKey()+" "+list.get(i).getValue());
+            res+=list.get(i).getValue();
+        }
+            
+        
+        return res;   //res will hold most occuring element frequency in array
+        
+    }
+    Time Complexity : O(nlogn)
+    Space Complexity : O(n)
+    
+    Method 2: (using HashMap and PriorityQueue)
+    --------------------------------------------
+    int kMostFrequent(int arr[], int n, int k){
+        // your code here
+        
+        Map<Integer,Integer> m=new HashMap<Integer,Integer>();
+        
+        for(int i=0;i<n;i++)
+            m.put(arr[i],m.getOrDefault(arr[i],0)+1);
+        
+        PriorityQueue<Map.Entry<Integer,Integer>> pq=new PriorityQueue<Map.Entry<Integer,Integer>>(new Comparator<Map.Entry<Integer,Integer>>(){
+                
+                public int compare(Map.Entry<Integer,Integer> m1,Map.Entry<Integer,Integer> m2)
+                {
+                    if(m1.getValue()==m2.getValue())
+                        return m1.getKey().compareTo(m2.getKey());
+                    else
+                        return m2.getValue().compareTo(m1.getValue());
+                }
+                
+            });
+        
+        for(Map.Entry<Integer,Integer> x:m.entrySet())
+            pq.add(x);
+        
+        
+        int res=0;
+        for(int i=0;i<k;i++){
+            
+            System.out.println(pq.peek().getKey()+" "+pq.peek().getValue());
+            res+=pq.poll().getValue();
+        }
+            
+        
+        return res; //res will hold most occuring element frequency in array
+        
+    }
+    
+    Time Complexity : O(nlogn)
+    Space Complexity : O(n)
+    
+    Method 3:(Using HashMap and list<list>>) //In Linear Time
+    ----------------------------------------
+    int kMostFrequent(int arr[], int n, int k){
+        // your code here
+        
+        Map<Integer,Integer> m=new HashMap<Integer,Integer>();
+        
+        for(int i=0;i<n;i++)
+            m.put(arr[i],m.getOrDefault(arr[i],0)+1);
+        
+        List<List<Integer>> freq=new ArrayList<List<Integer>>();
+        
+        for(int i=0;i<=n;i++)
+        {
+            freq.add(new ArrayList<Integer>());
+        }
+        
+        for(Map.Entry<Integer,Integer> x : m.entrySet())
+            freq.get(x.getValue()).add(x.getKey());
+        
+        
+            
+        int res=0;
+        int count=0;
+        for(int i=n-1;i>=0;i--){
+            
+            
+            for(Integer x:freq.get(i)){
+                
+                res+=i;
+                
+               // System.out.print(x+" ");
+                count++;
+                if(count==k)
+                     break;
+               
+            }
+            //System.out.println();
+            if(count==k)
+                break;
+        }
+            
+        
+        return res; //res will hold most occuring element frequency in array
+        
+    }
+    
+    Time Complexity : O(n)
+    Space Complexity : O(n)
+    
+    //Above three mwthod doesnot print the key in a perticular order 
+    //But this 3rd method will print in the same order the elements appear from left to right
+    
+    Method 4:(Using HashMap and list<list>>)
+    ----------------------------------------
+    
+    int kMostFrequent(int arr[], int n, int k){
+        // your code here
+        
+        Map<Integer,Integer> m=new HashMap<Integer,Integer>();
+        
+        for(int i=0;i<n;i++)
+            m.put(arr[i],m.getOrDefault(arr[i],0)+1);
+        
+        List<List<Integer>> freq=new ArrayList<List<Integer>>();
+        
+        for(int i=0;i<=n;i++)
+        {
+            freq.add(new ArrayList<Integer>());
+        }
+        
+        for(int i=0;i<n;i++)
+        {
+            int f=m.get(arr[i]);
+            if(f!=-1)
+            {
+                freq.get(f).add(arr[i]);
+                m.put(arr[i],-1);
+            }
+        }
+        
+        
+            
+        int res=0;
+        int count=0;
+        for(int i=n-1;i>=0;i--){
+            
+            
+            for(Integer x:freq.get(i)){
+                
+                res+=i;
+                
+               // System.out.print(x+" ");
+                count++;
+                if(count==k)
+                     break;
+               
+            }
+            //System.out.println();
+            if(count==k)
+                break;
+        }
+            
+        
+        return res; //res will hold most occuring element frequency in array
+        
+    }
+    
+    Time Complexity : O(nlogn)
+    Space Complexity : O(n)
