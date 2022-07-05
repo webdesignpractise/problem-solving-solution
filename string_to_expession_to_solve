@@ -1,0 +1,67 @@
+/******************************************************************************
+INPUT  : fouraddfivesubtwo
+OUTPUT : Expresion is : 4+5-2
+         Evaluation result : 7
+INPUT  : fouraddfivesubtwoadd
+OUTPUT : Invalid Expression
+
+*******************************************************************************/
+#include <iostream>
+#include<map>
+using namespace std;
+int eval(string str)
+{
+    int res=(str[0]-'0');
+    for(int i=1;i<str.length();i+=2)
+    {
+        if(!(str[i+1]>='0' && str[i]<='9'))
+            return -1;
+        int operand2=(str[i+1]-'0');
+        char op=str[i];
+        
+        if(op=='+')
+            res+=operand2;
+        else
+            res-=operand2;
+            
+    }
+    return res;
+}
+int main()
+{
+    cout<<"Enter a String"<<endl;
+    string str;cin>>str;
+    string temp="";
+    string res="";
+    map<string,char> mp={
+                            {"one",'1'},
+                            {"two",'2'},
+                            {"three",'3'},
+                            {"four",'4'},
+                            {"five",'5'},
+                            {"six",'6'},
+                            {"seven",'7'},
+                            {"eight",'8'},
+                            {"nine",'9'},
+                            {"add",'+'},
+                            {"sub",'-'}
+                            
+                        };
+    for(int i=0;i<str.length();i++)
+    {
+        temp+=str[i];
+        
+        if(mp.find(temp)!=mp.end())
+        {
+            res+=mp[temp];
+            temp="";
+        }
+        
+    }
+    cout<<"Expression is : "<<res<<endl;
+    if(eval(res)!=-1)
+        cout<<"Evaluation result : "<<eval(res)<<endl;
+    else
+        cout<<"Invalid Expression\n";
+    return 0;
+}
